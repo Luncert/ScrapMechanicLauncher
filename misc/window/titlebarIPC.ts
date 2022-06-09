@@ -10,27 +10,53 @@
  * @package : Titlebar IPC (Main Process)
  */
 
+import { WINDOW_STATE } from '@common/Constants';
 import { BrowserWindow, ipcMain, shell } from 'electron';
 
+
+function fetchWindowState(mainWindow: BrowserWindow) {
+  if (mainWindow.isFullScreen()) {
+      return WINDOW_STATE.FULLSCREEN;
+  }
+  if (mainWindow.isMaximized()) {
+      return WINDOW_STATE.MAXIMIZED;
+  }
+  if (mainWindow.isMinimized()) {
+      return WINDOW_STATE.MINIMIZED;
+  }
+  if (!mainWindow.isVisible()) {
+      return WINDOW_STATE.HIDDEN;
+  }
+  return WINDOW_STATE.NORMAL;
+}
+
 export const registerTitlebarIpc = (mainWindow: BrowserWindow) => {
-  ipcMain.handle('window-minimize', () => {
+  ipcMain.on('fetch-window-state', (evt) => {
+    evt.returnValue = fetchWindowState(mainWindow);
+  });
+  
+  ipcMain.on('window-minimize', (evt) => {
     mainWindow.minimize();
+    evt.returnValue = fetchWindowState(mainWindow);
   });
 
-  ipcMain.handle('window-maximize', () => {
+  ipcMain.on('window-maximize', (evt) => {
     mainWindow.maximize();
+    evt.returnValue = fetchWindowState(mainWindow);
   });
 
-  ipcMain.handle('window-toggle-maximize', () => {
+  ipcMain.on('window-toggle-maximize', (evt) => {
     if (mainWindow.isMaximized()) {
       mainWindow.unmaximize();
     } else {
       mainWindow.maximize();
     }
+    evt.returnValue = fetchWindowState(mainWindow);
   });
 
-  ipcMain.handle('window-close', () => {
+  ipcMain.on('window-close', (evt) => {
     mainWindow.close();
+    evt.returnValue = WINDOW_STATE.HIDDEN;
   });
 
   ipcMain.handle('web-undo', () => {

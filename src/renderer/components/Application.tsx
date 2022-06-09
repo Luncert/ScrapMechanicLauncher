@@ -3,6 +3,7 @@ import logo from '@assets/images/logo.png';
 import darkModeIcon from '@assets/images/darkmode.png';
 import lightModeIcon from '@assets/images/lightmode.png';
 import './Application.scss';
+import Button from '@components/base/Button';
 
 const Application: React.FC = () => {
   const [counter, setCounter] = useState(0);
@@ -50,7 +51,7 @@ const Application: React.FC = () => {
 
   return (
     <div id='erwt'>
-      <div className='header'>
+      {/* <div className='header'>
         <div className='main-heading'>
           <h1 className='themed'>ERWT - Electron Boilerplate</h1>
         </div>
@@ -121,7 +122,8 @@ const Application: React.FC = () => {
             </span>
           </button>
         </div>
-      </div>
+      </div> */}
+      <Button >asd</Button>
     </div>
   );
 };

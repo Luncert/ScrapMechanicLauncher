@@ -14,7 +14,7 @@ import { ipcRenderer } from 'electron';
 
 const titlebarContext = {
   exit() {
-    ipcRenderer.invoke('window-close');
+    return ipcRenderer.sendSync('window-close');
   },
   undo() {
     ipcRenderer.invoke('web-undo');
@@ -59,14 +59,17 @@ const titlebarContext = {
     ipcRenderer.invoke('web-toggle-fullscreen');
   },
   minimize() {
-    ipcRenderer.invoke('window-minimize');
+    return ipcRenderer.sendSync('window-minimize');
   },
   toggle_maximize() {
-    ipcRenderer.invoke('window-toggle-maximize');
+    return ipcRenderer.sendSync('window-toggle-maximize');
+  },
+  fetchWindowState() {
+    return ipcRenderer.sendSync('fetch-window-state')
   },
   open_url(url: string) {
     ipcRenderer.invoke('open-url', url);
-  },
+  }
 };
 
 export type TitlebarContextApi = typeof titlebarContext;

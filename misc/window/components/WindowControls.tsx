@@ -11,8 +11,10 @@
  */
 
 import classNames from 'classnames';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import context from '../titlebarContextApi';
+import '@assets/icon/iconfont.css'
+import { WINDOW_STATE } from '@common/Constants';
 
 type Props = {
   platform: string;
@@ -20,6 +22,20 @@ type Props = {
 };
 
 const WindowControls: React.FC<Props> = (props) => {
+
+  const [windowState, setWindowState] = useState(context.fetchWindowState())
+  
+  useEffect(() => {
+    function onResize() {
+      setWindowState(context.fetchWindowState())
+    }
+    window.addEventListener('resize', onResize)
+
+    return () => {
+      window.removeEventListener('resize', onResize)
+    }
+  }, [setWindowState]);
+  
   return (
     <section
       className={classNames(
@@ -28,25 +44,22 @@ const WindowControls: React.FC<Props> = (props) => {
       )}
     >
       <div
-        className='control minimize'
-        onClick={() => context.minimize()}
+        className='control minimize iconfont iconMinimize'
+        onClick={() => setWindowState(context.minimize())}
         title={props.tooltips ? 'Minimize' : null}
       >
-        ─
       </div>
       <div
-        className='control maximize'
-        onClick={() => context.toggle_maximize()}
+        className={'control maximize iconfont ' + (windowState == WINDOW_STATE.MAXIMIZED ? 'iconNormalize' : 'iconMaximize')}
+        onClick={() => setWindowState(context.toggle_maximize())}
         title={props.tooltips ? 'Maximize' : null}
       >
-        ☐
       </div>
       <div
-        className='control close'
-        onClick={() => context.exit()}
+        className='control close iconfont iconClose'
+        onClick={() => setWindowState(context.exit())}
         title={props.tooltips ? 'Close' : null}
       >
-        X
       </div>
     </section>
   );
