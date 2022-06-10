@@ -1,0 +1,32 @@
+
+.main-page {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    text-align: center;
+    flex-grow: 1;
+
+    h1 {
+        font-size: 1.5rem;
+        font-weight: 300;
+        color: var(--app-heading-color);
+        line-height: 1;
+        text-transform: uppercase;
+    }
+
+    img {
+        width: 30%;
+        margin: 0px auto;
+    }
+
+    .game-path {
+        display: flex;
+        flex-direction: row;
+        width: 400px;
+        margin: 0px auto;
+
+        border-radius: 5px;
+        overflow: hidden;
+    }
+}

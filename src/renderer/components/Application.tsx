@@ -4,7 +4,8 @@ import darkModeIcon from '@assets/images/darkmode.png';
 import lightModeIcon from '@assets/images/lightmode.png';
 import './Application.scss';
 import Button from '@components/base/Button';
-import Api from './Api';
+import Api from '@misc/window/Api';
+import MainPage from './MainPage';
 
 const Application: React.FC = () => {
   const [counter, setCounter] = useState(0);
@@ -50,19 +51,15 @@ const Application: React.FC = () => {
     setDarkTheme(!darkTheme);
   }
 
-  function getGamePath() {
-    let gamePath = Api.getGamePath()
-    console.log(gamePath)
-  }
-
   return (
     <div id='sml'>
+      <MainPage />
       {/* <div className='header'>
         <div className='main-heading'>
-          <h1 className='themed'>ERWT - Electron Boilerplate</h1>
+          <h1 className='themed'>Scrap Mechanic Launcher</h1>
         </div>
+        <img src={logo} title='Codesbiome' />
         <div className='main-teaser'>
-          <img src={logo} title='Codesbiome' />
           <div>
             Minimal boilerplate for rapid development of Desktop Applications
             using Electron, React, Typescript and Webpack. For faster
@@ -96,8 +93,8 @@ const Application: React.FC = () => {
             License <span>{versions.license}</span>
           </span>
         </div>
-      </div>
-
+      </div> */}
+{/* 
       <div className='footer'>
         <div className='center'>
           <button
@@ -129,7 +126,7 @@ const Application: React.FC = () => {
           </button>
         </div>
       </div> */}
-      <Button fixSize={false} onClick={getGamePath}>Open Game Path</Button>
+      {/* <Button fixSize={false} onClick={getGamePath}>Open Game Path</Button> */}
     </div>
   );
 };

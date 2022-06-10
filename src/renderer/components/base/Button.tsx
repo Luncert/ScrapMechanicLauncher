@@ -1,40 +1,38 @@
 
-import React, { useEffect, CSSProperties } from 'react';
-import AnimatedElement from './AnimatedElement';
+import React, { Component, CSSProperties } from 'react';
+import AnimatedElement, { AnimationProps } from './AnimatedElement';
 import './Button.css'
 
 interface ButtonProps {
   fixSize?: boolean
-  style?: CSSProperties | undefined
+  style?: CSSProperties
+  animation?: AnimationProps
   onClick?: () => void
   children?: string | JSX.Element
 }
 
-const Button: React.FC<ButtonProps> = ({fixSize, style, onClick, children}) => {
+export default class Button extends Component<ButtonProps> {
 
-  useEffect(() => {
+  render() {
     let style: any = {
       backgroundColor: 'rgb(56, 56, 56)'
     }
-    if (fixSize == undefined || fixSize) {
+    if (this.props.fixSize == undefined || this.props.fixSize) {
       style.width = 30
       style.height = 30
     }
-    if (style) {
-      Object.assign(style, style)
+    if (this.props.style) {
+      Object.assign(style, this.props.style)
     }
-  }, []);
-
-  return (
-    <AnimatedElement
-      className='btn'
-      onClick={onClick}
-      active={{backgroundColor: 'rgb(100, 100, 100)'}}
-      hover={{backgroundColor: 'rgb(80, 80, 80)'}}
-      style={style}>
-        {children}
-    </AnimatedElement>
-  )
+    return (
+      <AnimatedElement
+        className='btn'
+        onClick={this.props.onClick}
+        active={{backgroundColor: 'rgb(100, 100, 100)'}}
+        hover={{backgroundColor: 'rgb(80, 80, 80)'}}
+        style={style} animation={this.props.animation}>
+          {this.props.children}
+      </AnimatedElement>
+    )
+  }
 }
-
-export default Button;

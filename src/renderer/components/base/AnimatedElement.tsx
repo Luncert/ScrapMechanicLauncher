@@ -1,12 +1,21 @@
 import React, { Component, CSSProperties, DOMAttributes } from 'react'
 import anime from 'animejs'
 
-interface AnimatedElementProps extends DOMAttributes<HTMLDivElement> {
-  active?: AnimationConfig
-  hover?: AnimationConfig
+interface AnimatedElementProps extends DOMAttributes<HTMLDivElement>, AnimationProps {
+  /**
+   * Highest priority as animation config.
+   */
+  animation?: AnimationProps
   className?: string
   getRef?: (ref: React.RefObject<HTMLDivElement>) => void
   style?: CSSProperties | undefined
+}
+
+export interface AnimationProps {
+  base?: AnimationConfig
+  focus?: AnimationConfig
+  active?: AnimationConfig
+  hover?: AnimationConfig
 }
 
 interface AnimationConfig {
@@ -19,12 +28,16 @@ export default class AnimatedElement extends Component<AnimatedElementProps> {
   protected ref: React.RefObject<HTMLDivElement>
   private color: string
   private backgroundColor: string
-  private isHovered: boolean
+  private hovered: boolean
+  private focused: boolean
 
+  private animationProps: AnimationProps
   private onMouseEnter: () => void
   private onMouseLeave: () => void
   private onMouseDown: () => void
   private onMouseUp: () => void
+  private onFocus: () => void
+  private onBlur: () => void
 
   constructor(props: AnimatedElementProps) {
     super(props)
@@ -34,20 +47,25 @@ export default class AnimatedElement extends Component<AnimatedElementProps> {
       this.props.getRef(this.ref)
     }
 
-    if (props.hover) {
-      this.onMouseEnter = this.startHoverAnimation
-      this.onMouseLeave = this.stopHoverAnimation
-    } else {
-      this.onMouseEnter = () => {}
-      this.onMouseLeave = () => {}
+    this.animationProps = Object.assign({},
+      {focus: props.focus, active: props.active, hover: props.hover} as AnimationProps,
+      props.animation, props.style)
+    
+    this.detectColor()
+
+    if (this.animationProps.hover) {
+      this.onMouseEnter = this.startHoverAnimation.bind(this)
+      this.onMouseLeave = this.stopHoverAnimation.bind(this)
     }
 
-    if (props.active) {
-      this.onMouseDown = this.startActiveAnimation
-      this.onMouseUp = this.stopActiveAnimation
-    } else {
-      this.onMouseDown = () => {}
-      this.onMouseUp = () => {}
+    if (this.animationProps.active) {
+      this.onMouseDown = this.startActiveAnimation.bind(this)
+      this.onMouseUp = this.stopActiveAnimation.bind(this)
+    }
+
+    if (this.animationProps.focus) {
+      this.onFocus = this.startFocusAnimation.bind(this)
+      this.onBlur = this.stopFocusAnimation.bind(this)
     }
 
     // if (!this.background) {
@@ -63,39 +81,43 @@ export default class AnimatedElement extends Component<AnimatedElementProps> {
     // }
   }
 
-  componentDidMount() {
-    this.detectColor()
-  }
-
   detectColor() {
-    const { style } = this.props
-    if (style) {
-      let tmp = (style.background || style.backgroundColor) as any;
-      if (typeof(tmp) === 'string') {
-        this.backgroundColor = tmp
-      }
-
-      this.color = style.color
+    let base = this.animationProps.base
+    if (base) {
+      this.color = base.color
+      this.backgroundColor = base.backgroundColor
     }
   }
 
+  protected startFocusAnimation() {
+    this.focused = true
+    this.ref.current.style.backgroundColor = this.animationProps.focus.backgroundColor
+  }
+
+  protected stopFocusAnimation() {
+    this.focused = false
+    this.ref.current.style.backgroundColor = this.backgroundColor
+  }
+
   protected startHoverAnimation() {
-    this.isHovered = true
+    this.hovered = true
     anime({
       targets: this.ref.current,
-      color: this.props.hover.color,
-      backgroundColor: this.props.hover.backgroundColor,
+      color: this.animationProps.hover.color,
+      backgroundColor: this.animationProps.hover.backgroundColor,
       easing: 'easeInOutSine',
       duration: 150
     })
   }
 
   protected stopHoverAnimation() {
-    this.isHovered = false
+    let color = this.focused && this.animationProps.focus.color ? this.animationProps.focus.color: this.color
+    let backgroundColor = this.focused && this.animationProps.focus.backgroundColor ? this.animationProps.focus.backgroundColor: this.backgroundColor
+    this.hovered = false
     anime({
       targets: this.ref.current,
-      color: this.color,
-      backgroundColor: this.backgroundColor,
+      color: color,
+      backgroundColor: backgroundColor,
       easing: 'easeInOutSine',
       duration: 150
     })
@@ -104,16 +126,16 @@ export default class AnimatedElement extends Component<AnimatedElementProps> {
   protected startActiveAnimation() {
     anime({
       targets: this.ref.current,
-      color: this.props.active.color,
-      backgroundColor: this.props.active.backgroundColor,
+      color: this.animationProps.active.color,
+      backgroundColor: this.animationProps.active.backgroundColor,
       easing: 'easeInOutSine',
       duration: 100
     })
   }
 
   protected stopActiveAnimation() {
-    let color = this.isHovered && this.props.hover.color ? this.props.hover.color: this.color
-    let backgroundColor = this.isHovered && this.props.hover.backgroundColor ? this.props.hover.backgroundColor: this.backgroundColor
+    let color = this.hovered && this.animationProps.hover.color ? this.animationProps.hover.color: this.color
+    let backgroundColor = this.hovered && this.animationProps.hover.backgroundColor ? this.animationProps.hover.backgroundColor: this.backgroundColor
     anime({
       targets: this.ref.current,
       color: color,
@@ -129,10 +151,13 @@ export default class AnimatedElement extends Component<AnimatedElementProps> {
     delete props['hover']
     delete props['getRef']
     props.ref = this.ref
-    props.onMouseEnter = () => this.onMouseEnter()
-    props.onMouseLeave = () => this.onMouseLeave()
-    props.onMouseDown = () => this.onMouseDown()
-    props.onMouseUp = () => this.onMouseUp()
+    props.onMouseEnter = this.onMouseEnter
+    props.onMouseLeave = this.onMouseLeave
+    props.onMouseDown = this.onMouseDown
+    props.onMouseUp = this.onMouseUp
+    props.onFocus = this.onFocus
+    props.onBlur = this.onBlur
+    props.style = Object.assign(props.style, {color: this.color, backgroundColor: this.backgroundColor})
     return React.createElement('div', props, this.props.children)
   }
 }
