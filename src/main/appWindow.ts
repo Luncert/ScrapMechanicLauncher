@@ -1,6 +1,7 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, dialog, ipcMain } from 'electron';
 import path from 'path';
 import { registerTitlebarIpc } from '@misc/window/titlebarIPC';
+import { Channels } from '@common/Constants';
 
 // Electron Forge automatically creates these entry points
 declare const APP_WINDOW_WEBPACK_ENTRY: string;
@@ -24,7 +25,7 @@ export function createAppWindow(): BrowserWindow {
     titleBarStyle: 'hidden',
     icon: path.resolve('assets/images/appIcon.ico'),
     webPreferences: {
-      nodeIntegration: false,
+      nodeIntegration: true,
       contextIsolation: true,
       nodeIntegrationInWorker: false,
       nodeIntegrationInSubFrames: false,
@@ -60,4 +61,12 @@ function registerMainIPC() {
    * to Communicate asynchronously from the main process to renderer processes.
    */
   registerTitlebarIpc(appWindow);
+
+  ipcMain.on(Channels.Api.OpenGamePath, async(evt) => {
+    let ret = await dialog.showOpenDialog({
+      title: 'Open Game Path',
+      properties: ['openDirectory']
+    })
+    evt.returnValue = ret.filePaths
+  })
 }

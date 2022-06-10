@@ -4,6 +4,7 @@ import darkModeIcon from '@assets/images/darkmode.png';
 import lightModeIcon from '@assets/images/lightmode.png';
 import './Application.scss';
 import Button from '@components/base/Button';
+import Api from './Api';
 
 const Application: React.FC = () => {
   const [counter, setCounter] = useState(0);
@@ -49,8 +50,13 @@ const Application: React.FC = () => {
     setDarkTheme(!darkTheme);
   }
 
+  function getGamePath() {
+    let gamePath = Api.getGamePath()
+    console.log(gamePath)
+  }
+
   return (
-    <div id='erwt'>
+    <div id='sml'>
       {/* <div className='header'>
         <div className='main-heading'>
           <h1 className='themed'>ERWT - Electron Boilerplate</h1>
@@ -123,7 +129,7 @@ const Application: React.FC = () => {
           </button>
         </div>
       </div> */}
-      <Button >asd</Button>
+      <Button fixSize={false} onClick={getGamePath}>Open Game Path</Button>
     </div>
   );
 };
