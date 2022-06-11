@@ -1,3 +1,6 @@
 [submodule "misc/window"]
 	path = misc/window
 	url = https://github.com/guasam/electron-window
+[submodule "src/main/lib"]
+	path = src/main/lib
+	url = https://github.com/Luncert/ScrapMechanicLauncherLib

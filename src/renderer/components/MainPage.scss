@@ -6,13 +6,18 @@
     flex-direction: column;
     text-align: center;
     flex-grow: 1;
+    background-image: url('../../../assets/images/background.png');
+    background-size: cover;
+    align-items: center;
+    justify-content: center;
 
     h1 {
-        font-size: 1.5rem;
-        font-weight: 300;
+        font-size: 1.7rem;
+        font-weight: 800;
         color: var(--app-heading-color);
         line-height: 1;
         text-transform: uppercase;
+        mix-blend-mode: color-dodge;
     }
 
     img {

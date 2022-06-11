@@ -6,6 +6,7 @@ import './Application.scss';
 import Button from '@components/base/Button';
 import Api from '@misc/window/Api';
 import MainPage from './MainPage';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 
 const Application: React.FC = () => {
   const [counter, setCounter] = useState(0);
@@ -52,8 +53,16 @@ const Application: React.FC = () => {
   }
 
   return (
-    <div id='sml'>
-      <MainPage />
+      <HashRouter>
+        <Routes>
+          <Route path="/" element={<MainPage />}/>
+        </Routes>
+      </HashRouter>
+  );
+};
+
+export default Application;
+
       {/* <div className='header'>
         <div className='main-heading'>
           <h1 className='themed'>Scrap Mechanic Launcher</h1>
@@ -127,8 +136,3 @@ const Application: React.FC = () => {
         </div>
       </div> */}
       {/* <Button fixSize={false} onClick={getGamePath}>Open Game Path</Button> */}
-    </div>
-  );
-};
-
-export default Application;
