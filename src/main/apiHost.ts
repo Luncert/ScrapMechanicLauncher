@@ -1,14 +1,16 @@
-import { ScrapMechanicHub } from "./lib/src/ScrapMechanicHubLib"
+import { ActionLogger, ScrapMechanicHub } from "./lib/src/ScrapMechanicHubLib"
 import { BrowserWindow, dialog, ipcMain } from 'electron';
 import { Channels } from "@common/Constants";
+import { v4 as uuidv4 } from 'uuid'
+import { LoadGameLog } from "@common/Types";
 
 class Context {
 
-  private hub: ScrapMechanicHub
+  private hub = new ScrapMechanicHub()
 
-  loadGame(gamePath: string) {
-    console.log('loading game content from', gamePath)
-    this.hub = new ScrapMechanicHub(gamePath)
+  loadGame(gamePath: string, actionLogger: ActionLogger) {
+    console.log('loading game from', gamePath)
+    this.hub.loadGame(gamePath, actionLogger)
   }
 
   loadContent() {
@@ -24,10 +26,20 @@ export function registerApi(mainWindow: BrowserWindow) {
           title: 'Open Game Path',
           properties: ['openDirectory']
         })
-        evt.returnValue = ret.filePaths
+        evt.returnValue = ret.filePaths[0]
       })
 
-    ipcMain.handle(Channels.Api.LoadGameContent, (evt, gamePath) => {
-      ctx.loadGame(gamePath)
+    ipcMain.on(Channels.Api.LoadGameContent, (evt, gamePath) => {
+      let tempChannel = uuidv4()
+      const actionLogger = {
+        write(data) {
+          mainWindow.webContents.send(tempChannel, {log: data} as LoadGameLog)
+        },
+        close(actionSuccess) {
+          mainWindow.webContents.send(tempChannel, {complete: true, success: actionSuccess} as LoadGameLog)
+        },
+      } as ActionLogger
+      ctx.loadGame(gamePath, actionLogger)
+      evt.returnValue = tempChannel
     })
 }

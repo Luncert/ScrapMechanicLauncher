@@ -150,6 +150,10 @@ export default class AnimatedElement extends Component<AnimatedElementProps> {
     delete props['active']
     delete props['hover']
     delete props['getRef']
+    delete props['focus']
+    delete props['active']
+    delete props['hover']
+    delete props['animation']
     props.ref = this.ref
     props.onMouseEnter = this.onMouseEnter
     props.onMouseLeave = this.onMouseLeave

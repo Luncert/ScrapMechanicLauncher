@@ -23,12 +23,13 @@ export default class Input extends Component<InputProps> {
         }
         return (
             <AnimatedElement
+                className='input'
                 focus={{backgroundColor: 'rgb(100, 100, 100)'}}
                 hover={{backgroundColor: 'rgb(80, 80, 80)'}}
                 style={style} animation={this.props.animation}>
                 <input placeholder={this.props.placeholder}
                     style={{textAlign: this.props.centered ? 'center' : 'inherit'}}
-                    value={this.props.value}
+                    value={this.props.value || ''}
                     onChange={e => this.props.onChange && this.props.onChange(e.target.value)}
                     spellCheck={this.props.spellCheck != undefined && this.props.spellCheck} />
             </AnimatedElement>

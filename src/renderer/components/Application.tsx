@@ -7,6 +7,7 @@ import Button from '@components/base/Button';
 import Api from '@misc/window/Api';
 import MainPage from './MainPage';
 import { HashRouter, Route, Routes } from 'react-router-dom';
+import GameInfoPage from './GameInfoPage';
 
 const Application: React.FC = () => {
   const [counter, setCounter] = useState(0);
@@ -55,6 +56,7 @@ const Application: React.FC = () => {
   return (
       <HashRouter>
         <Routes>
+          <Route path="/game" element={<GameInfoPage />}/>
           <Route path="/" element={<MainPage />}/>
         </Routes>
       </HashRouter>
