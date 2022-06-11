@@ -1,7 +1,7 @@
-import { app, BrowserWindow, dialog, ipcMain } from 'electron';
+import { app, BrowserWindow } from 'electron';
 import path from 'path';
 import { registerTitlebarIpc } from '@misc/window/titlebarIPC';
-import { Channels } from '@common/Constants';
+import { registerApi } from './apiHost';
 
 // Electron Forge automatically creates these entry points
 declare const APP_WINDOW_WEBPACK_ENTRY: string;
@@ -61,12 +61,5 @@ function registerMainIPC() {
    * to Communicate asynchronously from the main process to renderer processes.
    */
   registerTitlebarIpc(appWindow);
-
-  ipcMain.on(Channels.Api.OpenGamePath, async(evt) => {
-    let ret = await dialog.showOpenDialog({
-      title: 'Open Game Path',
-      properties: ['openDirectory']
-    })
-    evt.returnValue = ret.filePaths
-  })
+  registerApi(appWindow);
 }

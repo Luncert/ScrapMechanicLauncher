@@ -1,7 +1,8 @@
 
 export const Channels = {
   Api: {
-    OpenGamePath: 'open-game-path'
+    OpenGamePath: 'open-game-path',
+    LoadGameContent: 'load-game-content'
   },
   WindowAction: {
     WindowRestore: 'window-restore',

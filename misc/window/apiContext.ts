@@ -4,6 +4,9 @@ import { ipcRenderer } from 'electron';
 const apiContext = {
     getGamePath() {
         return ipcRenderer.sendSync(Channels.Api.OpenGamePath)
+    },
+    loadGameContent(gamePath: string) {
+        ipcRenderer.invoke(Channels.Api.LoadGameContent, gamePath)
     }
 };
 

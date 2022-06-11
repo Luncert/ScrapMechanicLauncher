@@ -4,12 +4,16 @@
   "version": "6.0.0",
   "description": "Custom boilerplate for writing Desktop Applications using Electron, React, Webpack, TypeScript in 2022",
   "main": ".webpack/main",
+  "subPackages": [
+    "src/main/lib"
+  ],
   "scripts": {
     "start": "cross-env NODE_ENV=development electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "eslint src/ --ext .ts,.js,.tsx,.jsx"
+    "lint": "eslint src/ --ext .ts,.js,.tsx,.jsx",
+    "postinstall": "subpkg install"
   },
   "keywords": [
     "electron boilerplate",
@@ -72,6 +76,7 @@
     "sass": "^1.50.1",
     "sass-loader": "^12.6.0",
     "style-loader": "^3.3.1",
+    "subpackage": "^1.1.0",
     "ts-loader": "9.2.8",
     "typescript": "^4.6.3",
     "webpack": "^5.72.0"

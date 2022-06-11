@@ -24,7 +24,9 @@ export default class MainPage extends Component<any, MainPageState> {
     }
 
     loadGame() {
-        console.log(this.state.gamePath)
+        const { gamePath } = this.state
+        console.log(gamePath)
+        Api.loadGameContent(gamePath)
     }
 
     render() {
