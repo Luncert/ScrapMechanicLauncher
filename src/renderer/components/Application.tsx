@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import logo from '@assets/images/logo.png';
 import darkModeIcon from '@assets/images/darkmode.png';
 import lightModeIcon from '@assets/images/lightmode.png';
 import './Application.scss';
-import Button from '@components/base/Button';
-import Api from '@misc/window/Api';
-import MainPage from './MainPage';
 import { HashRouter, Route, Routes } from 'react-router-dom';
-import GameInfoPage from './GameInfoPage';
+import LoadingPage from './LoadingPage';
+import MainPage from './MainPage';
 
 const Application: React.FC = () => {
-  const [counter, setCounter] = useState(0);
   const [darkTheme, setDarkTheme] = useState(true);
-  const [versions, setVersions] = useState<Record<string, string>>({});
 
   /**
    * On component mount
@@ -26,11 +21,6 @@ const Application: React.FC = () => {
     } else if (useDarkTheme == 0) {
       setDarkTheme(false);
     }
-
-    // Apply verisons
-    const app = document.getElementById('app');
-    const versions = JSON.parse(app.getAttribute('data-versions'));
-    setVersions(versions);
   }, []);
 
   /**
@@ -56,8 +46,8 @@ const Application: React.FC = () => {
   return (
       <HashRouter>
         <Routes>
-          <Route path="/game" element={<GameInfoPage />}/>
-          <Route path="/" element={<MainPage />}/>
+          <Route path="/" element={<LoadingPage />}/>
+          <Route path="/main" element={<MainPage />}/>
         </Routes>
       </HashRouter>
   );

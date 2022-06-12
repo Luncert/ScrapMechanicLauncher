@@ -161,7 +161,7 @@ export default class AnimatedElement extends Component<AnimatedElementProps> {
     props.onMouseUp = this.onMouseUp
     props.onFocus = this.onFocus
     props.onBlur = this.onBlur
-    props.style = Object.assign(props.style, {color: this.color, backgroundColor: this.backgroundColor})
+    props.style = Object.assign(props.style || {}, {color: this.color, backgroundColor: this.backgroundColor})
     return React.createElement('div', props, this.props.children)
   }
 }
