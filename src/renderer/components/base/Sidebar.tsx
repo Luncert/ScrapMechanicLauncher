@@ -4,16 +4,16 @@ import { names } from './util';
 import '@assets/icon/iconfont.css';
 import './Sidebar.css';
 
-export default class Sidebar extends Component {
+interface SideBarProps {
+  children?: string | JSX.Element | JSX.Element[]
+}
+
+export default class Sidebar extends Component<SideBarProps> {
 
   render() {
     return (
       <div className='sidebar'>
-        <SidebarItem iconName='iconProject' />
-        <div className='alignToBottom'>
-          <SidebarItem iconName='iconUser' />
-          <SidebarItem iconName='iconConfig' />
-        </div>
+        { this.props.children }
       </div>
     )
   }
@@ -23,7 +23,7 @@ interface SidebarItemProps {
   iconName: string
 }
 
-class SidebarItem extends Component<SidebarItemProps> {
+export class SidebarItem extends Component<SidebarItemProps> {
 
   render() {
     return (

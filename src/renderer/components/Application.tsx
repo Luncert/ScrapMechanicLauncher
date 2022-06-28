@@ -46,8 +46,8 @@ const Application: React.FC = () => {
   return (
       <HashRouter>
         <Routes>
-          <Route path="/" element={<LoadingPage />}/>
-          <Route path="/main" element={<MainPage />}/>
+          {/* <Route path="/" element={<LoadingPage />}/> */}
+          <Route path="/" element={<MainPage />}/>
         </Routes>
       </HashRouter>
   );

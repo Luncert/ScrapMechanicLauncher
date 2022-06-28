@@ -51,7 +51,7 @@ export default class MainPage extends Component<any, MainPageState> {
                 <img src={logo} title='Codesbiome' />
                 <h1 className='themed'>Scrap Mechanic Launcher</h1>
                 <div className={'game-path' + (loading ? ' disabled' : '')}>
-                   <Input placeholder='Game Path' style={{width: '80%'}} centered
+                    <Input placeholder='Game Path' style={{width: '80%'}} centered
                         value={gamePath}
                         animation={{
                             base: {backgroundColor: 'rgb(51, 59, 111)'},
