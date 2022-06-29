@@ -53,21 +53,18 @@ export default class MainPage extends Component<any, MainPageState> {
                 <div className={'game-path' + (loading ? ' disabled' : '')}>
                     <Input placeholder='Game Path' style={{width: '80%'}} centered
                         value={gamePath}
-                        animation={{
-                            base: {backgroundColor: 'rgb(51, 59, 111)'},
-                            focus: {backgroundColor: 'rgb(62, 71, 128)'},
-                            hover: {backgroundColor: 'rgb(62, 71, 128)'}}}/>
+                        animationBase={{backgroundColor: 'rgb(51, 59, 111)'}}
+                        focusAnimation={{backgroundColor: 'rgb(62, 71, 128)'}}
+                        hoverAnimation={{backgroundColor: 'rgb(62, 71, 128)'}}/>
                     <Button fixSize={false} style={{width: '10%'}}
-                        animation={{
-                            base: {backgroundColor: 'rgb(39, 47, 97)'},
-                            active: {backgroundColor: 'rgb(84, 95, 171)'},
-                            hover: {backgroundColor: 'rgb(62, 71, 128)'}}}
+                        animationBase={{backgroundColor: 'rgb(39, 47, 97)'}}
+                        focusAnimation={{backgroundColor: 'rgb(84, 95, 171)'}}
+                        hoverAnimation={{backgroundColor: 'rgb(62, 71, 128)'}}
                         onClick={() => this.getGamePath()}>OPEN</Button>
                     <Button fixSize={false} style={{width: '10%'}}
-                        animation={{
-                            base: {backgroundColor: 'rgb(39, 47, 97)'},
-                            active: {backgroundColor: 'rgb(84, 95, 171)'},
-                            hover: {backgroundColor: 'rgb(62, 71, 128)'}}}
+                        animationBase={{backgroundColor: 'rgb(39, 47, 97)'}}
+                        focusAnimation={{backgroundColor: 'rgb(84, 95, 171)'}}
+                        hoverAnimation={{backgroundColor: 'rgb(62, 71, 128)'}}
                         onClick={() => this.loadGame()}>GO</Button>
                 </div>
                 {(loading || actionLog) &&

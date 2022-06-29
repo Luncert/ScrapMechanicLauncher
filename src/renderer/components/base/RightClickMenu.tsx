@@ -99,8 +99,8 @@ class MenuItem extends Component<MenuItemProps> {
   render() {
     return (
       <AnimatedElement
-        active={{backgroundColor: 'rgb(82, 82, 82)'}}
-        hover={{backgroundColor: 'rgb(72, 72, 72)'}}
+        activeAnimation={{backgroundColor: 'rgb(82, 82, 82)'}}
+        hoverAnimation={{backgroundColor: 'rgb(72, 72, 72)'}}
         style={{backgroundColor: 'rgb(56, 56, 56)'}}
         className={styles.menuItem}
         onClick={this.props.onClick}>{this.props.name}</AnimatedElement>

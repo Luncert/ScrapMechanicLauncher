@@ -3,10 +3,9 @@ import React, { Component, CSSProperties } from 'react';
 import AnimatedElement, { AnimationProps } from './AnimatedElement';
 import './Button.css'
 
-interface ButtonProps {
+interface ButtonProps extends AnimationProps {
   fixSize?: boolean
   style?: CSSProperties
-  animation?: AnimationProps
   onClick?: () => void
   children?: string | JSX.Element
 }
@@ -28,9 +27,9 @@ export default class Button extends Component<ButtonProps> {
       <AnimatedElement
         className='btn'
         onClick={this.props.onClick}
-        active={{backgroundColor: 'rgb(100, 100, 100)'}}
-        hover={{backgroundColor: 'rgb(80, 80, 80)'}}
-        style={style} animation={this.props.animation}>
+        activeAnimation={{backgroundColor: 'rgb(100, 100, 100)'}}
+        hoverAnimation={{backgroundColor: 'rgb(80, 80, 80)'}}
+        style={style} animation={this.props}>
           {this.props.children}
       </AnimatedElement>
     )

@@ -1,6 +1,48 @@
 
 .main-page {
     position: relative;
+    display: flex;
+    flex-direction: row;
     width: 100%;
     height: 100%;
+
+    .game-content-list {
+        width: 20%;
+        background-color: rgb(29, 54, 75);
+
+        .game-content-name {
+            color: white;
+            font-weight: bold;
+        }
+
+        .game-content-creator::before {
+            content: 'by ';
+            color: rgb(181, 181, 181);
+        }
+
+        .game-content-creator {
+            display: inline-block;
+            margin-left: 5px;
+            font-style: italic;
+            color: white;
+        }
+    }
+
+    .selected-game-content {
+        width: 50%;
+        background-color: rgb(47, 87, 120);
+
+        .content-tabs {
+            background-color: inherit;
+        }
+
+        .content-viewer {
+            
+        }
+    }
+
+    .profile-content {
+        width: 30%;
+        background-color: rgb(35, 65, 90);
+    }
 }

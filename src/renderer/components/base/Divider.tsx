@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-
-const styles = require('./Divider.css') as any;
+import './Divider.css';
 
 export default class Divider extends Component {
 
   render() {
     return (
-      <div className={styles.divider}></div>
+      <div className='divider'></div>
     )
   }
 }

@@ -1,0 +1,31 @@
+
+.tab {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid rgb(141, 141, 141);
+    width: 100%;
+    height: 2em;
+    line-height: 2em;
+
+    color: inherit;
+    background-color: inherit;
+
+    div {
+        background-color: inherit;
+    }
+
+    .tab-item {
+        color: rgb(214, 214, 214);
+        background-color: inherit;
+    
+        font-weight: bold;
+        cursor: pointer;
+        margin: 0px 5px;
+        padding: 0px 10px;
+    }
+
+    .selected-tab-item > .tab-item {
+        color: white !important;
+        border-bottom: 4px solid rgb(104, 149, 216);
+    }
+}
